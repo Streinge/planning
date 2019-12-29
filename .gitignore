@@ -3,3 +3,4 @@ planning/__pycache__/
 poetry.lock
 pyproject.toml
 streinge_planning.egg-info/
+*.рус
