@@ -5,3 +5,5 @@ pyproject.toml
 streinge_planning.egg-info/
 *.рус
 planning/reports/
+.vscode/
+planning/.vscode/
