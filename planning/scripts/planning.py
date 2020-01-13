@@ -1,7 +1,20 @@
 #!/usr/bin/env python3
+from tkinter import *
 
 def main():
-    print('Пайтон сила!')
+    
+
 
 if __name__ == '__main__':
     main()
+
+
+
+
+
+
+
+
+
+
+
