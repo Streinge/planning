@@ -1,47 +1,39 @@
 #!/usr/bin/env python3
 #coding:utf-8
 from tkinter import *
-from tkinter import messagebox
-# splashscreen
-def main():
-    root = Tk()
-    image = PhotoImage(file='/home/streinge/planning/planning/image/photo.png')
-    button=Button(root, image=image)
+    # функция принимает строку с путем к файлу заставки и  создает заставку к программе
+def splashscreen(path_to_image):
+    # класс Тк создаетс базовое окно заставки
+    splashscreen = Tk()
+    # класс PhotoImage позволяет использовать полноцветное изображение
+    image = PhotoImage(file=path_to_image)
+    # для создания фона с фото используем виджет "Кнопка" без указания размера, поэтому кнопка получилось со все окно и заполнила фон
+    button=Button(splashscreen,text='Плани', image=image)
+    lab=Label(splashscreen,text='Плани',fg='red',font='arial 14')
+    # упаковываем кнопку упаковщиком pack
     button.pack()
-   
+    lab.pack()
     #Возвращает разрешение экрана по ширине в пикселях.
-    ws = root.winfo_screenwidth() 
+    ws = splashscreen.winfo_screenwidth() 
     #Возвращает разрешение экрана по высоте в пикселях.
-    hs = root.winfo_screenheight()
-    w = 500 #root.winfo_width()
-    h = 300 #root.winfo_height()
-    x = (ws/2) - (w/2)
-    y = (hs/2) - (h/2)
-
-    root.geometry('%dx%d+%d+%d' % (w, h, x, y))
-    
-    root.overrideredirect(True)
-    
-    root.after(3000, lambda: root.destroy())
-    root.mainloop()
-    
-    print(w)
-    print(h)
-
-   
+    hs = splashscreen.winfo_screenheight()
+    #Задаем ширину окна заставки
+    width = 600
+    #Задаем высоту окна заставки
+    height = 500
+    #Определяем координат для размещения заставки точно по центру экрана
+    x = (ws/2) - (width/2)
+    y = (hs/2) - (height/2)
+    #задаем положение и размеры окна заставки
+    splashscreen.geometry('%dx%d+%d+%d' % (width, height, x, y))
+    #этим методом игнорируем окно заголовка окна, чтобы заставка выглядела, как заставка.
+    splashscreen.overrideredirect(True)
+    splashscreen.after(3000, lambda: splashscreen.destroy())
+    splashscreen.mainloop()
 
 
-    # root['bg'] = 'green' изменение фона окна на зеленый
+
+def main():
+    splashscreen('/home/streinge/planning/planning/image/photo.png')
 if __name__ == '__main__':
     main()
-
-
-
-
-
-
-
-
-
-
-
