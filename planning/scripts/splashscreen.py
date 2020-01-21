@@ -1,5 +1,5 @@
 from tkinter import *
-from random import *
+
 
 # функция принимает строку с путем к файлу заставки и  создает заставку к приложению
 def move_char(text, x, left_margin):
@@ -7,14 +7,10 @@ def move_char(text, x, left_margin):
         return
     else:
         splashscreen.move(text, -10, 0)
-        #splashscreen.move(text, -5, 0)
-        #splashscreen.move(text, -5, 0)
+        splashscreen.move(text, -5, 0)
+        splashscreen.move(text, -5, 0)
         main.after(10, lambda: move_char(text, x-10, left_margin))
-def filling(diapason, i):
-        x0 = randint(0, width)
-        y0 = randint(0, height)
-        splashscreen.create_oval(x0, y0, x0+10, y0+10, fill='grey', outline='grey')
-        main.after(1, lambda: filling(diapason, i+1))
+
         
 
 def splashscreen(path_to_image):
@@ -37,9 +33,9 @@ def splashscreen(path_to_image):
     # по точке отсчета. Дальше также метод принимает значение метода PhotoImage.
     image = splashscreen.create_image(width / 2, height / 2, anchor=CENTER, image=filename)
     
-    #text1 = splashscreen.create_text(width, 100, text = 'Планирование', anchor=NW,  font = ('Times', 72, 'bold'), fill = '#008209')
-    #text2 = splashscreen.create_text(width, 200, text = 'швейного', anchor=NW,  font = ('Times', 72, 'bold'), fill = '#F13C76')
-    #text3 = splashscreen.create_text(width, 300, text = 'производства', anchor=NW,  font = ('Times', 72, 'bold'), fill = 'white')
+    text1 = splashscreen.create_text(width, 100, text = 'Планирование', anchor=NW,  font = ('Times', 72, 'bold'), fill = 'black')
+    text2 = splashscreen.create_text(width, 200, text = 'швейного', anchor=NW,  font = ('Times', 72, 'bold'), fill = 'black')
+    text3 = splashscreen.create_text(width, 300, text = 'производства', anchor=NW,  font = ('Times', 72, 'bold'), fill = 'black')
     diapason = 0
     
 
@@ -54,14 +50,14 @@ def splashscreen(path_to_image):
     main.geometry('%dx%d+%d+%d' % (width, height, x, y))
     #этим методом игнорируем окно заголовка окна, чтобы заставка выглядела, как заставка.
     main.overrideredirect(True)
-    main.after(10000, lambda: main.destroy())
-    filling(1000, 0)
+    main.after(5000, lambda: main.destroy())
+    
 
      # упаковываем кнопку упаковщиком pack
     splashscreen.pack()
-    #move_char(text1,width, 30)
-    #main.after(1000, lambda: move_char(text2, width, 130))
-    #main.after(2500, lambda: move_char(text3, width, 50))
+    move_char(text1,width, 30)
+    main.after(1000, lambda: move_char(text2, width, 130))
+    main.after(2500, lambda: move_char(text3, width, 50))
     
     main.mainloop()
 
