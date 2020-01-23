@@ -36,9 +36,9 @@ def changing_color(i):
 
 
 
-p = subprocess.Popen(['/mnt/c/Xming/Xming.exe', '-multiwindow', '-clipboard'])
+"""p = subprocess.Popen(['/mnt/c/Xming/Xming.exe', '-multiwindow', '-clipboard'])
 code = p.wait()
-print(code)
+print(code)"""
 
 main = Tk()
 width = 600
