@@ -1,4 +1,6 @@
 from tkinter import *
+from subprocess import run
+import subprocess
 # функция принимает виджет create_text.сanvas, начальную координату 
 # по оси х,и значение левого отступа и перемещает слово до отступа 
 # справа налево по холсту
@@ -34,6 +36,9 @@ def changing_color(i):
 
 
 
+p = subprocess.Popen(['/mnt/c/Xming/Xming.exe', '-multiwindow', '-clipboard'])
+code = p.wait()
+print(code)
 
 main = Tk()
 width = 600
