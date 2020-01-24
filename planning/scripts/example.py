@@ -1,6 +1,10 @@
 from tkinter import *
 from subprocess import run
 import subprocess
+import time
+import os
+import signal
+
 # функция принимает виджет create_text.сanvas, начальную координату 
 # по оси х,и значение левого отступа и перемещает слово до отступа 
 # справа налево по холсту
@@ -35,10 +39,9 @@ def changing_color(i):
         main.after(150, lambda: changing_color(i+1))
 
 
-
-"""p = subprocess.Popen(['/mnt/c/Xming/Xming.exe', '-multiwindow', '-clipboard'])
-code = p.wait()
-print(code)"""
+code = subprocess.Popen(['/mnt/c/Xming/Xming.exe', '-multiwindow', '-clipboard'])
+time.sleep(1)
+print(code)
 
 main = Tk()
 width = 600
@@ -68,10 +71,17 @@ y = (hs/2) - (height/2)
 main.geometry('%dx%d+%d+%d' % (width, height, x, y))
 main.configure(borderwidth=1)
 main.overrideredirect(True)
-main.after(10000, lambda: main.destroy())
+main.after(3000, lambda: main.destroy())
 move_text(text1, width, 260)
 main.after(1000, lambda: move_text(text2, width, 260))
 main.after(2000, lambda: move_text(text3, width, 260))
 main.after(3000, lambda: changing_color(0))
 
 main.mainloop()
+print(code.poll())
+code.terminate()
+code.kill()
+print(code.poll())
+print(code.pid)
+os.kill(code.pid, signal.SIGTERM)
+print(code.poll())

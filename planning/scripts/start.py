@@ -2,12 +2,11 @@
 import os
 import subprocess
  
-code = subprocess.call(['/mnt/c/Xming/Xming.exe', '-multiwindow', '-clipboard'])
-time.sleep(5)
-  
-time.kill()
-if code == 0:
-    print("Success!")
+code = subprocess.Popen(['/mnt/c/Xming/Xming.exe', '-multiwindow', '-clipboard'])
+if code.returncode == 0:
+    print('Alive')
 else:
-    print("Error!")
+    print('Unreachable')
+
 #":0 -clipboard -multiwindow"
+#, stdout=subprocess.DEVNULL
