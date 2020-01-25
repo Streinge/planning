@@ -30,27 +30,37 @@ def text_creator(x0, y0, user_text, user_anchor, user_font, user_text_color):
 # функция принимает на вход значение инкремента и при каждом рекурсивном вызове
 # вызове функции выводит строку текста с новым текстом из списка цветов
 # терминальное условие - если список закончился, то выход
-def changing_color(i):
+def changing_color(colors_list,i):
     if i > len(colors_list) - 1:
         return
     else:
         #создание виджета текст.канвас с новым цветом 
         splashscreen.create_text(width / 2, height - 30, text='Разработано для личного использования', anchor=S,  font=('Times', 20), fill=colors_list[i])
-        main.after(150, lambda: changing_color(i+1))
+        main.after(80, lambda: changing_color(colors_list, i+1))
 
+def rectangle_background():
+    splashscreen.create_rectangle(20, height - 60, width  - 20, height - 30,  fill = '#f5f4f4', outline = '#f5f4f4')
 
-code = subprocess.Popen(['/mnt/c/Xming/Xming.exe', '-multiwindow', '-clipboard'])
+def destroy(event):
+    main.destroy()
+
+# запуск Х-сервера (Xming.exe) из кода приложения используя метод Popen из модуля subprocess
+# остальные методы .run, .call почему-то не работают, я все перепробовал.
+# 
+code = subprocess.Popen(['/mnt/c/Xming/Xming.exe', ':0', '-multiwindow', '-clipboard'])
 time.sleep(1)
-print(code)
 
 main = Tk()
+
 width = 600
 height = 320
 splashscreen = Canvas(main, height=height, width=width, background='#f5f4f4')
+
+
 filename = PhotoImage(file='/home/streinge/planning/planning/image/planning1.png')
 image = splashscreen.create_image(20, 30, anchor=NW, image=filename)
 line = splashscreen.create_line(10, 240, 590, 240, width = 2, fill = '#c4c3c2')
-splashscreen.pack()
+
 text_color = '#c4c3c2'
 text_font = ('Times', 36)
 text_anchor = NW
@@ -59,11 +69,17 @@ text2 = text_creator(width, 95, 'Швейного', text_anchor, text_font, text
 text3 = text_creator(width, 155, 'Производства', text_anchor, text_font, text_color)
 # задаю список цветов градации серого от светло-серого, до черного.
 colors_list = [
-              '#f7f7f8', '#ededed', '#e3e3e3', '#d9d9d9', '#cfcfcf', '#c4c4c4', '#bababa', 
+              '#f7f7f8', '#ededed', '#e3e3e3', '#d9d9d9', '#cfcfcf', '#c4c4c4', '#bababa',
               '#b0b0b0', '#a6a6a6', '#9c9c9c', '#919191', '#878787', '#7d7d7d', '#737373', 
-              '#696969', '#5e5e5e', '#545454', '#4a4a4a', '#404040', '#363636', '#2b2b2b',
+              '#696969', '#5e5e5e', '#545454', '#4a4a4a' , '#404040', '#363636', '#2b2b2b',
               '#212121','#171717','#0d0d0d','#030303'
               ]
+full_colors_list = colors_list.copy()
+i = 0
+while i <= len(colors_list) - 1:
+    full_colors_list.append(colors_list[len(colors_list) - 1 - i])
+    print(full_colors_list[i])
+    i += 1
 ws = main.winfo_screenwidth()
 hs = main.winfo_screenheight()
 x = (ws/2) - (width/2)
@@ -71,17 +87,22 @@ y = (hs/2) - (height/2)
 main.geometry('%dx%d+%d+%d' % (width, height, x, y))
 main.configure(borderwidth=1)
 main.overrideredirect(True)
-main.after(3000, lambda: main.destroy())
+main.after(10000, lambda: main.destroy())
 move_text(text1, width, 260)
 main.after(1000, lambda: move_text(text2, width, 260))
-main.after(2000, lambda: move_text(text3, width, 260))
-main.after(3000, lambda: changing_color(0))
+main.after(2000, lambda: move_text(text3, width, 260))    
+main.after(3000, lambda: changing_color(full_colors_list, 0))
+main.after(7000, lambda: rectangle_background())
+splashscreen.pack()
+splashscreen.focus()
+splashscreen.grab_set()
+main.bind('<Key>', destroy)
+# main.bind('<Button-1>', destroy)
+
+
+
 
 main.mainloop()
-print(code.poll())
-code.terminate()
-code.kill()
-print(code.poll())
-print(code.pid)
-os.kill(code.pid, signal.SIGTERM)
-print(code.poll())
+
+subprocess.run(['/mnt/c/Windows/SysWOW64/taskkill.exe', '/f', '/im', 'Xming.exe'])
+time.sleep(1)   

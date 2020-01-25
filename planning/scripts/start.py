@@ -1,12 +1,18 @@
+from tkinter import *
 
-import os
-import subprocess
- 
-code = subprocess.Popen(['/mnt/c/Xming/Xming.exe', '-multiwindow', '-clipboard'])
-if code.returncode == 0:
-    print('Alive')
-else:
-    print('Unreachable')
+def leftclick(event):
+    print ('Вы нажали левую кнопку мыши')
+def rightclick(event):
+    print ('Вы нажали правую кнопку мыши')
+def destroy(event):
+    root.destroy()
+root=Tk()
 
-#":0 -clipboard -multiwindow"
-#, stdout=subprocess.DEVNULL
+canv = Canvas(root, height=300, width=300, background='red')
+root.geometry("300x300+250+250")
+canv.focus()
+root.bind('<Key>', destroy)
+canv.pack()
+canv.grab_set()
+
+root.mainloop()                                                     

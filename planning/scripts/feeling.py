@@ -1,5 +1,5 @@
 # функция для заставки, которая заполняет окно мелкими кругами
-# работать не будет.
+# работать не будет потому что не заданы main  это ТК, и splashscreen это Canvas.
 from random import *
 def filling(diapason, i):
     if i == diapason:
